@@ -27,7 +27,7 @@ public class Coordinate {
 //	public static final int Y = 24;
 //	public static final int Z = 25;
 
-	private int row, col;
+	protected int row, col;
 	
 	public Coordinate(int r, int c) {
 		setRow(r);
@@ -60,6 +60,24 @@ public class Coordinate {
 	 */
 	public void setCol(int col) {
 		this.col = col;
+	}
+
+	public void moveUp(int i) {
+		row--;
+		
+	}
+
+	public void moveRight(int i) {
+		col++;
+		
+	}
+
+	public void moveDown(int i) {
+		row++;
+	}
+
+	public void moveLeft(int i) {
+		col--;
 	}
 
 }

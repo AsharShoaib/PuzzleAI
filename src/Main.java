@@ -4,6 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Main {
 
 	static Board<Tile> board;
+	
+	static Knight knightPlayer;
 
 	public static final int min = 1;
 	public static final int max = 10;
@@ -19,34 +21,82 @@ public class Main {
 		makeBoard();
 		addPawns();
 		drawBoard();
-		movePawns();
+		int i = 0;
+		while (i < 5) {
+			movePawns();
+			drawBoard();
+			i++;
+		}
 	}
 
 	private static void movePawns() {
 		for (ArrayList<Tile> rowList : board) {
 			for (Tile tile : rowList) {
-				if (!tile.getEmpty()){
-					switch(tile.getPiece().getMovement()){
+				if (!tile.getEmpty() && !tile.getPiece().isState()) {
+					Tile temp;
+					switch (tile.getPiece().getMovement()) {
 					case 1:
-						
+						tile.setEmpty(true);
+						temp = tile.getAdjacentTiles()[0];
+						temp.setEmpty(false);
+						temp.addPawn(tile.getPiece());
+						tile.removePawn();
+						temp.getPiece().moveUp(1);
 						break;
 					case 2:
+						tile.setEmpty(true);
+						temp = tile.getAdjacentTiles()[1];
+						temp.setEmpty(false);
+						temp.addPawn(tile.getPiece());
+						tile.removePawn();
+						temp.getPiece().moveRight(1);
 						break;
 					case 3:
+						tile.setEmpty(true);
+						temp = tile.getAdjacentTiles()[2];
+						temp.setEmpty(false);
+						temp.addPawn(tile.getPiece());
+						tile.removePawn();
+						temp.getPiece().moveDown(1);
 						break;
 					case 4:
+						tile.setEmpty(true);
+						temp = tile.getAdjacentTiles()[3];
+						temp.setEmpty(false);
+						temp.addPawn(tile.getPiece());
+						tile.removePawn();
+						temp.getPiece().moveLeft(1);
 						break;
 					}
-					
+
+				}
+			}
+		}
+		movesComplete();
+	}
+
+	private static void movesComplete() {
+		for (ArrayList<Tile> rowList : board) {
+			for (Tile tile : rowList) {
+				if (!tile.getEmpty() && tile.getPiece().isState()) {
+					tile.getPiece().setState(false);
 				}
 			}
 		}
 	}
 
 	private static void drawBoard() {
-		for (ArrayList<Tile> rowList : board) {
-			for (Tile tile : rowList) {
-				if (tile.getEmpty())
+		int temp = 0;
+		int temp2 = 0;
+		System.out.println("-------------------------------");
+		System.out.println("");
+
+		for (int i = 0; i < Main.rowLength; i++) {
+			System.out.print(temp);
+			temp++;
+			for (int k = 0; k < Main.colLength; k++) {
+				temp2++;
+				if (board.getTile(i, k).getEmpty())
 					System.out.print("[ ]");
 				else
 					System.out.print("[P]");
@@ -64,9 +114,12 @@ public class Main {
 	}
 
 	private static void popAdjTiles() {
-		for (ArrayList<Tile> rowList : board) {
-			for (Tile tile : rowList) {
+		int row; // Row number, from 0 to 7
+		int col; // Column number, from 0 to 7
+		for (row = 0; row < rowLength; row++) {
+			for (col = 0; col < colLength; col++) {
 				Tile adjacentTiles[] = new Tile[4];
+				Tile tile = board.getTile(row, col);
 				if (tile.getCoordinates().getRow() > 0)
 					adjacentTiles[0] = board.getTile(tile.getCoordinates().getRow() - 1,
 							tile.getCoordinates().getCol());
@@ -101,10 +154,9 @@ public class Main {
 	private static void addPawns() {
 		numOfPawn = ThreadLocalRandom.current().nextInt(min, max + 1);
 		for (int i = 0; i < numOfPawn; i++) {
-			int x = ThreadLocalRandom.current().nextInt(0, rowLength);
-			int y = ThreadLocalRandom.current().nextInt(0, colLength);
-			board.getTile(x, y).addPawn();
-			board.getTile(x, y).setEmpty(false);
+			int x = ThreadLocalRandom.current().nextInt(1, rowLength - 1);
+			int y = ThreadLocalRandom.current().nextInt(1, colLength - 1);
+			board.addPawn(x, y);
 		}
 
 	}

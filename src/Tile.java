@@ -70,4 +70,10 @@ public class Tile {
 	public void addPawn(){
 		piece = new Pawn(coordinates);
 	}
+	public void addPawn(Pawn p){
+		piece = p;
+	}
+	public void removePawn() {
+		piece=null;
+	}
 }
