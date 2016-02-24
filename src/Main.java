@@ -20,6 +20,7 @@ public class Main {
 
 	private static int numOfPawn;
 	private static AStartAlgor aStar;
+	private static AlgorthimCoordinate aCoor;
 	public static void main(String[] args) {
 		makeBoard();
 		addPawns();
@@ -33,11 +34,15 @@ public class Main {
 //		bfs = new BreadthFirstSearch(board.getTile(knightPlayer.row, knightPlayer.col), pawns, board, numOfPawn);
 //		Main.makeMovements(bfs.execute());
 		
-		aStar = new AStartAlgor();
-		aStar.setStartCell(board.getTile(knightPlayer.row, knightPlayer.col));
-		aStar.setEndCell(pawns);
-		Main.makeMovements(aStar.AStar());
+//		aStar = new AStartAlgor();
+//		aStar.setStartCell(board.getTile(knightPlayer.row, knightPlayer.col));
+//		aStar.setEndCell(pawns);
+//		Main.makeMovements(aStar.AStar());
 
+//		aCoor = new	AlgorthimCoordinate();
+//		aCoor.setStartCell(board.getTile(knightPlayer.row, knightPlayer.col));
+//		aCoor.setEndCell(pawns);
+//		Main.makeMovements(aCoor.AStar());
 		
 		// buildArrayListOfTiles(aStar.AStar());
 		// int i = 0;
