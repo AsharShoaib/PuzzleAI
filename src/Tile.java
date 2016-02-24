@@ -1,10 +1,12 @@
+import java.util.Arrays;
 
 public class Tile {
 
 	private Coordinate coordinates;
 	private Boolean empty;
-	private Pawn piece;
+	private Pieces piece;
 	private Tile adjacentTiles [];
+	private boolean visited;
 	
 	/**
 	 * @param coordinates
@@ -14,6 +16,7 @@ public class Tile {
 		super();
 		this.coordinates = coordinates;
 		this.empty = empty;
+		this.visited = false;
 	}
 	public void populateAdjacentTiles(Tile[] tileArray) {
 		this.adjacentTiles = tileArray;
@@ -57,7 +60,7 @@ public class Tile {
 	/**
 	 * @return the piece
 	 */
-	public Pawn getPiece() {
+	public Pieces getPiece() {
 		return piece;
 	}
 	/**
@@ -67,13 +70,32 @@ public class Tile {
 		this.piece = piece;
 	}
 	
-	public void addPawn(){
+	public void addPiece(){
 		piece = new Pawn(coordinates);
 	}
-	public void addPawn(Pawn p){
+	public void addPiece(Pieces p){
 		piece = p;
 	}
 	public void removePawn() {
 		piece=null;
+	}
+	/**
+	 * @return the visited
+	 */
+	public boolean isVisited() {
+		return visited;
+	}
+	/**
+	 * @param visited the visited to set
+	 */
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Tile [empty=" + empty + ", piece=" + piece +  ", visited=" + visited + "]";
 	}
 }

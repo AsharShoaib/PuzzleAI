@@ -37,7 +37,7 @@ public class Knight extends Pieces {
 			if(!(this.row+1>Main.colLength))
 				temp.add(new Coordinate(this.row+1, this.col+2));
 		}
-		return null;
+		return temp;
 	}
 
 }

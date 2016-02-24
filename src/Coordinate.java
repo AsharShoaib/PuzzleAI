@@ -80,4 +80,12 @@ public class Coordinate {
 		col--;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Coordinate [row=" + row + ", col=" + col + "]";
+	}
+
 }

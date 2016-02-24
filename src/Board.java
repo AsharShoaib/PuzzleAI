@@ -51,10 +51,16 @@ public class Board<T> extends ArrayList<ArrayList<T>> {
 	public void addPawn(int x, int y) {
 
 		Tile tile = (Tile) getTile(x, y);
-		tile.addPawn();
+		tile.addPiece();
 		tile.setEmpty(false);
-		this.piece.add(tile.getPiece());
+		this.piece.add((Pawn) tile.getPiece());
 
+	}
+	
+	public void addKnight(Knight k){
+		Tile tile = (Tile) getTile(k.getRow(), k.getCol());
+		tile.addPiece(k);
+		tile.setEmpty(false);
 	}
 
 }
