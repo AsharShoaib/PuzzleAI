@@ -12,7 +12,9 @@ public class AStartAlgor {
 	static boolean closed[][] = new boolean[Main.rowLength][Main.colLength];
 	static Tile start;
 	static public ArrayList<Tile> end;
-
+	static public int numOfPawns;
+	static public ArrayList<Tile> visitedNodes;
+	
 	public void setStartCell(Tile t) {
 		start = t;
 	}
@@ -35,21 +37,29 @@ public class AStartAlgor {
 		}
 	}
 
-	public void AStar() {
-
+	public ArrayList<Tile> AStar() {
+		numOfPawns = end.size();
+		visitedNodes = new ArrayList<>();
 		// add the start location to open list.
 		open.add(start);
-
+		visitedNodes.add(start);
 		Tile current;
 
 		while (true) {
 			current = open.poll();
-			if (current == null)
+			if (current == null){
 				break;
+			}
 			closed[current.i][current.j] = true;
 
-			if (end.contains(current)) {
-				return;
+			if (foundNode(current)) {
+				System.out.println("Found the node" + current.finalCost);
+				end.remove(current);
+				numOfPawns--;
+				visitedNodes.add(current);
+				if(numOfPawns==0){
+					return visitedNodes;
+				}
 			}
 
 			if (!current.getChildren(Main.board).isEmpty()) {
@@ -60,6 +70,7 @@ public class AStartAlgor {
 			}
 
 		}
+		return visitedNodes;
 	}
 
 	private boolean foundNode(Tile current) {

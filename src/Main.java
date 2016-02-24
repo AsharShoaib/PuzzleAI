@@ -36,7 +36,10 @@ public class Main {
 		aStar = new AStartAlgor();
 		aStar.setStartCell(board.getTile(knightPlayer.row, knightPlayer.col));
 		aStar.setEndCell(pawns);
-		aStar.AStar();
+		Main.makeMovements(aStar.AStar());
+
+		
+		// buildArrayListOfTiles(aStar.AStar());
 		// int i = 0;
 		// while (i < 5) {
 		// ArrayList<Coordinate> ltemp = knightPlayer.possibleMovement();
@@ -46,6 +49,12 @@ public class Main {
 		// i++;
 		// }
 	}
+//
+//	private static ArrayList<Tile> buildArrayListOfTiles(Tile aStar2) {
+//		ArrayList<Tile> temp = new ArrayList<Tile>();
+//		for(current)
+//		
+//	}
 
 	static void makeMovements(ArrayList<Tile> visitedNodes) {
 		for (Tile t : visitedNodes) {

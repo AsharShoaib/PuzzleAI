@@ -11,7 +11,7 @@ public class Cell implements Comparable<Cell> {
 	}
 
 	public Cell() {
-		// TODO Auto-generated constructor stub
+		 // TODO Auto-generated constructor stub
 	}
 
 	@Override
