@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
-	static Board<Tile> board;
+	public static Board<Tile> board;
 
 	static Knight knightPlayer;
 
@@ -19,23 +19,24 @@ public class Main {
 	static BreadthFirstSearch bfs;
 
 	private static int numOfPawn;
-
+	private static AStartAlgor aStar;
 	public static void main(String[] args) {
 		makeBoard();
 		addPawns();
 		initPlayer();
 		drawBoard();
 
-		// dfs = new DepthFirstSearch(board.getTile(knightPlayer.row,
-		// knightPlayer.col), pawns, board, numOfPawn);
-		// dfs.execute();
-		// Main.makeMovements(dfs.visitedNodes);
+//		 dfs = new DepthFirstSearch(board.getTile(knightPlayer.row,knightPlayer.col), pawns, board, numOfPawn);
+//		 dfs.execute();
+//		 Main.makeMovements(dfs.visitedNodes);
 
-		// dfs = new DepthFirstSearch(board.getTile(knightPlayer.row,
-		// knightPlayer.col), pawns, board, numOfPawn);
-		bfs = new BreadthFirstSearch(board.getTile(knightPlayer.row, knightPlayer.col), pawns, board, numOfPawn);
-
-		Main.makeMovements(bfs.execute());
+//		bfs = new BreadthFirstSearch(board.getTile(knightPlayer.row, knightPlayer.col), pawns, board, numOfPawn);
+//		Main.makeMovements(bfs.execute());
+		
+		aStar = new AStartAlgor();
+		aStar.setStartCell(board.getTile(knightPlayer.row, knightPlayer.col));
+		aStar.setEndCell(pawns);
+		aStar.AStar();
 		// int i = 0;
 		// while (i < 5) {
 		// ArrayList<Coordinate> ltemp = knightPlayer.possibleMovement();
@@ -49,6 +50,8 @@ public class Main {
 	static void makeMovements(ArrayList<Tile> visitedNodes) {
 		for (Tile t : visitedNodes) {
 			System.out.println(t.getCoordinates());
+			
+			//Main.board.movePawns();
 			board.moveKnight(t);
 			drawBoard();
 		}
@@ -99,7 +102,7 @@ public class Main {
 		return c;
 	}
 
-	private static void movePawns() {
+	static void movePawns() {
 		for (ArrayList<Tile> rowList : board) {
 			for (Tile tile : rowList) {
 				if (!tile.getEmpty()) {
@@ -202,7 +205,7 @@ public class Main {
 		}
 	}
 
-	private static void drawBoard() {
+	public static void drawBoard() {
 		int temp = 0;
 		int temp2 = 0;
 		System.out.println("-------------------------------");

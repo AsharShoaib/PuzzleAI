@@ -9,16 +9,21 @@ public class BreadthFirstSearch extends AbstractSearch {
 
 	Tile startNode;
 	public ArrayList<Tile> goalNode;
-	public Board<Tile> board;
 	public ArrayList<Tile> visitedNodes;
 	public int numOfPawn;
+	public ArrayList<Pawn> pawnList;
 
 	public BreadthFirstSearch(Tile start, ArrayList<Tile> goalNode, Board<Tile> board, int numOfPawn) {
 		super(start, goalNode);
 		this.startNode = start;
-		this.goalNode = goalNode;
-		this.board = board;
+		this.goalNode = Main.board.getPawns();
+//		Main.board.movePawns();
+//		for(Tile t :Main.board.getPawns())
+//			this.goalNode.add(t);
+//		Main.board.movePawns();
 		this.numOfPawn = numOfPawn;
+		this.pawnList = getPawns();
+		
 		// this.compute();
 	}
 
@@ -41,10 +46,10 @@ public class BreadthFirstSearch extends AbstractSearch {
 				numOfPawn--;
 				return true;
 			} else {
-				if (current.getChildren(board).isEmpty())
+				if (current.getChildren(Main.board).isEmpty())
 					return false;
 				else
-					queue.addAll(current.getChildren(board));
+					queue.addAll(current.getChildren(Main.board));
 			}
 			visitedNodes.add(current);
 		}
@@ -69,22 +74,35 @@ public class BreadthFirstSearch extends AbstractSearch {
 				numOfPawn--;
 				goalNode.remove(current);
 			} else {
-				if (!current.getChildren(board).isEmpty())
-					queue.addAll(current.getChildren(board));
+				if (!current.getChildren(Main.board).isEmpty()){
+					ArrayList<Tile> children = current.getChildren(Main.board);
+					for (Tile t : children) {
+						queue.add(t);
+					}
+				}
 			}
 			visitedNodes.add(current);
-			moveMadeAdjustBoard();
+//			update();
 		}
 
 		return visitedNodes;
 
 	}
 
-	private void moveMadeAdjustBoard() {
-		for (Tile tn : goalNode) {
-			Main.movePawnsAtTile(tn);
-		}
+	
+	private void update() {
+		Main.board.movePawns();
+//		Main.drawBoard();
+		
+	}
 
+	private ArrayList<Pawn> getPawns(){
+		ArrayList<Pawn> pawnList = new ArrayList<Pawn>();
+		for (Tile tn : goalNode) {
+			pawnList.add((Pawn) tn.getPiece());
+		}
+		return pawnList;
+		
 	}
 
 	private boolean foundNode(Tile current) {

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class TileNode {
+public class TileNode extends Cell {
 
 	private Tile tile;
 	private Boolean visted;
@@ -85,5 +85,8 @@ public class TileNode {
 	public void setNumOfPawn(int numOfPawn) {
 		this.numOfPawn = numOfPawn;
 	}
-
+	@Override
+	public int compareTo(Tile other) {
+	    return Integer.compare(this.finalCost, other.finalCost);
+	}
 }

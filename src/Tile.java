@@ -17,6 +17,8 @@ public class Tile extends TileNode {
 	public Tile(Coordinate coordinates, Boolean empty) {
 		super();
 		this.coordinates = coordinates;
+		this.i = coordinates.row;
+		this.j = coordinates.col;
 		this.empty = empty;
 		this.visited = false;
 	}
@@ -141,5 +143,10 @@ public class Tile extends TileNode {
 	@Override
 	public String toString() {
 		return "Tile [empty=" + empty + ", piece=" + piece +  ", visited=" + visited + "]";
+	}
+	
+	@Override
+	public int compareTo(Tile other) {
+	    return Integer.compare(this.finalCost, other.finalCost);
 	}
 }
