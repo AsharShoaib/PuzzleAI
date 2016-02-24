@@ -4,7 +4,8 @@ import java.util.Collection;
 public class Board<T> extends ArrayList<ArrayList<T>> {
 
 	private ArrayList<Pawn> piece = new ArrayList<Pawn>();
-
+	private Knight knight;
+	
 	public void addToInnerArray(int index, T element) {
 		while (index >= this.size()) {
 			this.add(new ArrayList<T>());
@@ -60,7 +61,20 @@ public class Board<T> extends ArrayList<ArrayList<T>> {
 	public void addKnight(Knight k){
 		Tile tile = (Tile) getTile(k.getRow(), k.getCol());
 		tile.addPiece(k);
+		this.knight = k;
 		tile.setEmpty(false);
+	}
+
+	public void moveKnight(Tile t) {
+		Tile tile = (Tile) this.getTile(this.knight.getRow(), this.knight.getCol());
+		tile.setEmpty(true);
+		tile.setPiece(null);
+		tile = (Tile) this.getTile(t.getCoordinates().row, t.getCoordinates().col);
+		tile.addPiece(this.knight);
+		this.knight.setCol(t.getCoordinates().col);
+		this.knight.setRow(t.getCoordinates().row);
+		tile.setEmpty(false);
+		
 	}
 
 }

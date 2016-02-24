@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class TileNode {
 
@@ -5,18 +7,12 @@ public class TileNode {
 	private Boolean visted;
 	private TileNode parentNode;
 	private int numOfPawn;
-	
+
 	/**
-	 * @param tile
-	 * @param visted
-	 * @param numOfPawn 
 	 */
-	public TileNode(Tile tile, Boolean visited, TileNode t, int numOfPawn) {
+	public TileNode() {
 		super();
-		this.setTile(tile);
-		this.setParentNode(t);
-		this.setNumOfPawn(numOfPawn);
-		this.setVisted(visited);
+		this.setVisted(false);
 	}
 
 	/**
@@ -27,7 +23,8 @@ public class TileNode {
 	}
 
 	/**
-	 * @param tile the tile to set
+	 * @param tile
+	 *            the tile to set
 	 */
 	public void setTile(Tile tile) {
 		this.tile = tile;
@@ -41,7 +38,8 @@ public class TileNode {
 	}
 
 	/**
-	 * @param visted the visted to set
+	 * @param visted
+	 *            the visted to set
 	 */
 	public void setVisted(Boolean visited) {
 		this.visted = visited;
@@ -55,13 +53,16 @@ public class TileNode {
 	}
 
 	/**
-	 * @param parentNode the parentNode to set
+	 * @param parentNode
+	 *            the parentNode to set
 	 */
 	public void setParentNode(TileNode parentNode) {
 		this.parentNode = parentNode;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -78,9 +79,11 @@ public class TileNode {
 	}
 
 	/**
-	 * @param numOfPawn the numOfPawn to set
+	 * @param numOfPawn
+	 *            the numOfPawn to set
 	 */
 	public void setNumOfPawn(int numOfPawn) {
 		this.numOfPawn = numOfPawn;
 	}
+
 }

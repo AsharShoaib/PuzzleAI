@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
-public class Tile {
+public class Tile extends TileNode {
 
 	private Coordinate coordinates;
 	private Boolean empty;
@@ -90,6 +92,48 @@ public class Tile {
 	 */
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+	
+	public ArrayList<Tile> getChildren(Board<Tile> board) {
+		ArrayList<Coordinate> movesList = possibleMovement(this);
+		ArrayList<Tile> nodeList = new ArrayList<Tile>();
+		Tile tile = null;
+		for (Coordinate c : movesList) {
+			tile = board.getTile(c.row, c.col);
+			nodeList.add(tile);
+		}
+
+		return nodeList;
+	}
+
+	public ArrayList<Coordinate> possibleMovement(Tile t) {
+		ArrayList<Coordinate> temp = new ArrayList<Coordinate>();
+		if (!(t.getCoordinates().row - 2 < 0)) {
+			if (!(t.getCoordinates().col - 1 < 0))
+				temp.add(new Coordinate(t.getCoordinates().row - 2, t.getCoordinates().col - 1));
+			if (!(t.getCoordinates().col + 1 > Main.colLength - 1))
+				temp.add(new Coordinate(t.getCoordinates().row - 2, t.getCoordinates().col + 1));
+		}
+		if (!(t.getCoordinates().row + 2 > Main.rowLength - 1)) {
+			if (!(t.getCoordinates().col - 1 < 0))
+				temp.add(new Coordinate(t.getCoordinates().row + 2, t.getCoordinates().col - 1));
+			if (!(t.getCoordinates().col + 1 > Main.colLength - 1))
+				temp.add(new Coordinate(t.getCoordinates().row + 2, t.getCoordinates().col + 1));
+		}
+		if (!(t.getCoordinates().col - 2 < 0)) {
+			if (!(t.getCoordinates().row - 1 < 0))
+				temp.add(new Coordinate(t.getCoordinates().row - 1, t.getCoordinates().col - 2));
+			if (!(t.getCoordinates().row + 1 > Main.colLength - 1))
+				temp.add(new Coordinate(t.getCoordinates().row + 1, t.getCoordinates().col - 2));
+		}
+		if (!(t.getCoordinates().col + 2 > Main.colLength - 1)) {
+			if (!(t.getCoordinates().row - 1 < 0))
+				temp.add(new Coordinate(t.getCoordinates().row - 1, t.getCoordinates().col + 2));
+			if (!(t.getCoordinates().row + 1 > Main.colLength - 1))
+				temp.add(new Coordinate(t.getCoordinates().row + 1, t.getCoordinates().col + 2));
+		}
+		// System.out.println(temp.toString());
+		return temp;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

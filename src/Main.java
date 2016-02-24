@@ -14,6 +14,9 @@ public class Main {
 
 	public static final int minMovementOption = 1;
 	public static final int maxMovementOption = 4;
+	public static ArrayList<Tile> pawns;
+	static DepthFirstSearch dfs;
+	static BreadthFirstSearch bfs;
 
 	private static int numOfPawn;
 
@@ -22,21 +25,40 @@ public class Main {
 		addPawns();
 		initPlayer();
 		drawBoard();
-		BinaryTree BFS = new BinaryTree(board.getTile(knightPlayer.row, knightPlayer.col), knightPlayer, board, numOfPawn);
-//		int i = 0;
-//		while (i < 5) {
-//			ArrayList<Coordinate> ltemp = knightPlayer.possibleMovement();
-//			System.out.println(ltemp);
-//			movePawns();
-//			drawBoard();
-//			i++;
-//		}
+
+		// dfs = new DepthFirstSearch(board.getTile(knightPlayer.row,
+		// knightPlayer.col), pawns, board, numOfPawn);
+		// dfs.execute();
+		// Main.makeMovements(dfs.visitedNodes);
+
+		// dfs = new DepthFirstSearch(board.getTile(knightPlayer.row,
+		// knightPlayer.col), pawns, board, numOfPawn);
+		bfs = new BreadthFirstSearch(board.getTile(knightPlayer.row, knightPlayer.col), pawns, board, numOfPawn);
+
+		Main.makeMovements(bfs.execute());
+		// int i = 0;
+		// while (i < 5) {
+		// ArrayList<Coordinate> ltemp = knightPlayer.possibleMovement();
+		// System.out.println(ltemp);
+		// movePawns();
+		// drawBoard();
+		// i++;
+		// }
+	}
+
+	static void makeMovements(ArrayList<Tile> visitedNodes) {
+		for (Tile t : visitedNodes) {
+			System.out.println(t.getCoordinates());
+			board.moveKnight(t);
+			drawBoard();
+		}
+
 	}
 
 	private static void initPlayer() {
 		knightPlayer = new Knight(getEmptyTile());
 		board.addKnight(knightPlayer);
-		
+
 	}
 
 	private static Coordinate getEmptyTile() {
@@ -125,6 +147,51 @@ public class Main {
 		movesComplete();
 	}
 
+	static void movePawnsAtTile(Tile tile) {
+
+		if (!tile.getEmpty()) {
+			if (!tile.getPiece().isState() && (tile.getPiece() instanceof Pawn)) {
+				Tile temp;
+				switch (tile.getPiece().getMovement()) {
+				case 1:
+					tile.setEmpty(true);
+					temp = tile.getAdjacentTiles()[0];
+					temp.setEmpty(false);
+					temp.addPiece((Pawn) tile.getPiece());
+					tile.removePawn();
+					temp.getPiece().moveUp(1);
+					break;
+				case 2:
+					tile.setEmpty(true);
+					temp = tile.getAdjacentTiles()[1];
+					temp.setEmpty(false);
+					temp.addPiece((Pawn) tile.getPiece());
+					tile.removePawn();
+					temp.getPiece().moveRight(1);
+					break;
+				case 3:
+					tile.setEmpty(true);
+					temp = tile.getAdjacentTiles()[2];
+					temp.setEmpty(false);
+					temp.addPiece((Pawn) tile.getPiece());
+					tile.removePawn();
+					temp.getPiece().moveDown(1);
+					break;
+				case 4:
+					tile.setEmpty(true);
+					temp = tile.getAdjacentTiles()[3];
+					temp.setEmpty(false);
+					temp.addPiece((Pawn) tile.getPiece());
+					tile.removePawn();
+					temp.getPiece().moveLeft(1);
+					break;
+				}
+			}
+
+		}
+		movesComplete();
+	}
+
 	private static void movesComplete() {
 		for (ArrayList<Tile> rowList : board) {
 			for (Tile tile : rowList) {
@@ -148,10 +215,10 @@ public class Main {
 
 				if (board.getTile(i, k).getEmpty())
 					System.out.print("[ ]");
-				else if(board.getTile(i, k).getPiece() instanceof Pawn) {
+				else if (board.getTile(i, k).getPiece() instanceof Pawn) {
 					System.out.print("[P]");
 					temp2++;
-				}else{
+				} else {
 					System.out.print("[K]");
 				}
 
@@ -209,10 +276,12 @@ public class Main {
 
 	private static void addPawns() {
 		numOfPawn = ThreadLocalRandom.current().nextInt(min, max + 1);
+		pawns = new ArrayList<Tile>();
 		System.out.println(numOfPawn);
 		for (int i = 0; i < numOfPawn; i++) {
 			Coordinate c = getEmptyTileForPawn();
 			board.addPawn(c.getRow(), c.getCol());
+			pawns.add(board.getTile(c.getRow(), c.getCol()));
 		}
 
 	}
